@@ -28,6 +28,8 @@ mmu_entries[2^10]
 // reason for abort
 reason: entry_not_present or illegal_operation or write_to_read_only or user_execute_non_user
 
+rti_to_user = false
+
 on read (virt_index: 10, type: instruction_fetch or read or write or vector_fetch):
   if enabled:
     if type == vector_fetch:
@@ -64,9 +66,13 @@ on read (virt_index: 10, type: instruction_fetch or read or write or vector_fetc
 
     data = memory_decoder_read(entry.phys)
 
-    if mode == user:
-      if type == instruction_fetch:
+    if type == instruction_fetch:
+      if mode == user:
         if data == SEI or data == STP or data == WAI or data == XCE:
           reason = illegal_operation
           ABORT
+      else:
+        if data == RTI:
+          if rti_to_user:
+            mode = user
 ```
