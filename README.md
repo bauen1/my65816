@@ -1,6 +1,6 @@
 # Emulator for my65816
 
-This requires lib65816 with a small patch:
+This requires [lib65816](https://bitbucket.org/kc5tja/lib65816/src) with a small patch:
 
 Insert `cpu_wait = 0;` after `BEGIN_CPU_FUNC(abort)` in `src/opcodes.h`
 
