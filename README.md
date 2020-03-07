@@ -1,4 +1,22 @@
-# Simulator for my65816
+# Emulator for my65816
+
+This requires lib65816 with a small patch:
+
+Insert `cpu_wait = 0;` after `BEGIN_CPU_FUNC(abort)` in `src/opcodes.h`
+
+# Components:
+
+* w65c816 processor
+* clock
+* MMU (CPLD)
+  * 16kb RAM
+* up to 16mb memory (more if support is added to the MMU)
+* SPI
+  * SD-Card Reader
+  * ethernet
+* UART
+    simulated by an atmega
+* 4kb EEPROM (boot rom)
 
 # MMU
 
