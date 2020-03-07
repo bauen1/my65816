@@ -210,7 +210,7 @@ void physical_write(word32 address, byte value, word32 timestamp) {
     if (address <= 0x00FFFF) {
         /* bank 0 */
 
-        if ((address >= 0x00C000) && (address <= 0x00DFFF)) {
+        if ((address >= 0x00C000) && (address <= 0x00EFFF)) {
             /* IO */
             return physical_write_io(address, value, timestamp);
         } else if ((address >= 0x00F000) && (address <= 0x00FFFF)) {
