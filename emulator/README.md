@@ -1,9 +1,5 @@
 # Emulator for my65816
 
-This requires [lib65816](https://bitbucket.org/kc5tja/lib65816/src) with a small patch:
-
-Insert `cpu_wait = 0;` after `BEGIN_CPU_FUNC(abort)` in `src/opcodes.h`
-
 # Components:
 
 * w65c816 processor
@@ -26,6 +22,8 @@ The MMU supplies the upper 10+ bits for the memory decoder.
 The MMU is connected to the data bus (maybe even between processor and memory).
 
 The MMU has 1024 entries (TODO: we could multiply this easily and allow switching using a register),these are indexed by the upper 10 address bits
+
+the kernel should map all supervisor entries in bank 0 as read-only, since a user could change the stack pointer to point to a read-write, supervisor entry, and cause an interrupt to write 3 bytes in that area.
 
 On reset the MMU is disabled
 
