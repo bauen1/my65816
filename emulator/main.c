@@ -1,14 +1,16 @@
-#include <assert.h>
+#include <lib65816/cpu.h>
+#include <lib65816/cpuevent.h>
+
 #include <poll.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
-#include <stdbool.h>
 #include <string.h>
 #include <curses.h>
-#include "cpu.h"
-#include "cpuevent.h"
+
+#include <assert.h>
+#include <stdarg.h>
+#include <stdbool.h>
 
 static const char *program = NULL;
 
