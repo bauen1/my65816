@@ -245,7 +245,7 @@ byte MEM_readMem(word32 address, word32 timestamp, word32 emulFlags) {
             if (emulFlags & EMUL_PIN_SYNC) {
                 /* shadow upper 16kb of bank 0 */
                 if ((mmu_shadow_upper_bank0) && (mmu_index == 3)) {
-                    mmu_index = 0x7ff;
+                    mmu_index = 0x3ff;
                 }
             }
         }
