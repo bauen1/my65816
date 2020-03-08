@@ -119,8 +119,8 @@ byte physical_read_io(word32 address, word32 timestamp, word32 emulFlags) {
     }
 
     /* mmu: entries */
-    if ((address >= 0x00EC00) && (address <= 0x00EFFF)) {
-        size_t index = address - 0x00EC00;
+    if ((address >= 0x00E800) && (address <= 0x00EFFF)) {
+        size_t index = address - 0x00E800;
         index /= 2;
         assert(index <= MMU_ENTRIES);
 
@@ -191,8 +191,8 @@ void physical_write_io(word32 address, byte value, word32 timestamp) {
     }
 
     /* mmu: entries */
-    if ((address >= 0x00ec00) && (address <= 0x00efff)) {
-        size_t index = address - 0xec00;
+    if ((address >= 0x00e800) && (address <= 0x00efff)) {
+        size_t index = address - 0xe800;
         index /= 2;
         assert(index <= MMU_ENTRIES);
         word32 entry = mmu_entries[index];
@@ -297,6 +297,7 @@ byte MEM_readMem(word32 address, word32 timestamp, word32 emulFlags) {
                     return 0xEA; /* NOP */
                 } else if (v == 0xFB) {
                     /* XCE */
+                    /* FIXME: we might actually allow this */
                     CPU_abort();
                     return 0xEA; /* NOP */
                 }
