@@ -54,7 +54,7 @@ on read (virt_index: 10, type: instruction_fetch or read or write or vector_fetc
       mode = supervisor
 
     if mode == supervisor and shadow_upper:
-      if type == instruction_fetch:
+      if type == instruction_fetch or type == vector_fetch:
         // by only redirecting instruction fetches, we can allow supervisor code execution from
         // this range, but also allow data access (stack)
         if virt_index == 3: // 3  -> 0x00c000 - 0x00ffff
@@ -67,7 +67,8 @@ on read (virt_index: 10, type: instruction_fetch or read or write or vector_fetc
       ABORT
 
     if entry.user:
-      mode = user
+      if type == instruction_fetch:
+        mode = user
 
     if mode == user:
       if not entry.user:

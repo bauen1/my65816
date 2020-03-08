@@ -244,7 +244,7 @@ byte MEM_readMem(word32 address, word32 timestamp, word32 emulFlags) {
         size_t mmu_index = (address >> 14) & 0x7FF;
 
         if (mmu_supervisor) {
-            if (emulFlags & EMUL_PIN_SYNC) {
+            if ((emulFlags & EMUL_PIN_VPA) || (emulFlags & EMUL_PIN_VP)) {
                 /* shadow upper 16kb of bank 0 */
                 if ((mmu_shadow_upper_bank0) && (mmu_index == 3)) {
                     mmu_index = 0x3ff;
@@ -261,7 +261,9 @@ byte MEM_readMem(word32 address, word32 timestamp, word32 emulFlags) {
         }
 
         if (entry & MMU_ENTRY_USER) {
-            mmu_supervisor = false;
+            if (emulFlags & EMUL_PIN_VPA) {
+                mmu_supervisor = false;
+            }
         }
 
         if (!mmu_supervisor) {
@@ -276,7 +278,7 @@ byte MEM_readMem(word32 address, word32 timestamp, word32 emulFlags) {
 
         v = physical_read(physical_address, timestamp, emulFlags);
 
-        if (emulFlags & EMUL_PIN_SYNC) {
+        if (emulFlags & EMUL_PIN_VPA) {
             if (mmu_supervisor) {
                 if (v == 0x40) { /* RTI */
                     if (mmu_rti_to_user) {
